@@ -11,16 +11,31 @@ public class DemoLoginAspect {
 
     // Declaring a pointcut expression for reuse
     @Pointcut("execution(* com.example.aopdemo.dao.*.*(..))")
-	private void forDAOPackage() {};
+	private void forDAOPackage() {}
+
+    // Pointcut for getters
+    @Pointcut("execution(* com.example.aopdemo.dao.*.get*(..))")
+	private void forGetters() {
+	}
+
+    // Pointcut for setters
+    @Pointcut("execution(* com.example.aopdemo.dao.*.set*(..))")
+	private void forSetters() {
+	}
+
+    // Pointcut for all method of com.example.aopdemo.dao pacakge except for getters and setters
+	@Pointcut("forDAOPackage() && !(forGetters() || forSetters())")
+	private void forDAOPackageNoGetterSetter() {
+	}
 
     // Reusing a pointcut expression that was declared before 
     // Works for all methods in a specific package located in any class with any parameter(s)
-    @Before("forDAOPackage()")
+    @Before("forDAOPackageNoGetterSetter()")
     public void beforeAnyMethodOfAPackage() {
 	System.out.println("\n ***** This executes before calling any method of com.example.aopdemo.dao package with any return type and parameters");
     }
 
-    @Before("forDAOPackage()")
+    @Before("forDAOPackageNoGetterSetter()")
     public void performAPIAnalytics() {
 	System.out.println("\n **** Performing API analytics... ");
     }

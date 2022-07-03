@@ -14,7 +14,10 @@ public class MainDemoApp {
 		MembershipDAO membershipDAO = context.getBean("membershipDAO", MembershipDAO.class);
 		
 		accountDAO.addAccount();
-		
+
+		accountDAO.setName("Account DAO 1");
+		accountDAO.setServiceCode("Service 1");
+
 		membershipDAO.addAccount();
 		
 		// Account account1 = new Account();
